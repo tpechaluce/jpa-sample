@@ -6,6 +6,8 @@ import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.repository.TodoRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,14 +18,19 @@ import java.util.List;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final EmployeeRepository empRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() {
         List<Employee> empList = List.of(
-                new Employee("Jane", "Doe"),
-                new Employee("John", "Doe"),
-                new Employee("Juan", "Dela Cruz"),
-                new Employee("Maria", "de Pedro")
+                new Employee("Jane", "Doe", "j.doe@edu.com", passwordEncoder.encode("password123"),
+                        List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"))),
+                new Employee("John", "Doe","john.d@edu.com", passwordEncoder.encode("password456"),
+                        List.of(new SimpleGrantedAuthority("ROLE_USER"))),
+                new Employee("Juan", "Dela Cruz", "jdc@edu.com", passwordEncoder.encode("password789"),
+                        List.of(new SimpleGrantedAuthority("ROLE_USER"))),
+                new Employee("Maria", "de Pedro", "m.de.pedro@edu.com", passwordEncoder.encode("password098"),
+                        List.of(new SimpleGrantedAuthority("ROLE_ADMIN")))
         );
 
         empRepo.saveAll(empList);

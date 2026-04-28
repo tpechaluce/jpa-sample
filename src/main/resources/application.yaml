@@ -1,11 +1,18 @@
-spring:
-  application:
-    name: demo
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: root
-    password:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: 'create'
+spring: # Root Spring Boot configuration section.
+  application: # Configuration related to the application itself.
+    name: demo # Sets the application name to "demo".
+  datasource: # Configuration for the database connection.
+    url: jdbc:h2:mem:testdb # Uses an in-memory H2 database named testdb.
+    username: root # Database username.
+    password: root # Database password.
+  jpa: # Configuration for Java Persistence API and Hibernate.
+    database-platform: org.hibernate.dialect.H2Dialect # Tells Hibernate to use the H2 dialect.
+    hibernate: # Hibernate-specific settings.
+      ddl-auto: 'create' # Creates the database schema on startup and drops it when the app stops.
+  h2: # H2 database console settings.
+    console: # Settings for the browser-based H2 console.
+      enabled: true # Enables access to the H2 console.
+      path: /h2/console # Sets the URL path for the console.
+  security: # Spring Security default user settings.
+    username: user # Default username for basic authentication.
+    password: user # Default password for basic authentication.
